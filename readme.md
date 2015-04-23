@@ -24,12 +24,15 @@ placeholdme = require 'placeholdme'
 
 function love.load()
 	local imageSource = placeholdme(100,50,3,4)
-	-- instead of 'image/path/here.png', just put placeholdme
+	-- instead of 'image/path/here.png', just put a call to placeholdme
 	placeholder = love.graphics.newImage(imageSource)
 end
 
 function love.draw()
-	-- d
+	-- draw it like you would anything else
 	love.graphics.draw(placeholder, 0, 0)
 end
 ```
+
+# Example Output
+![a bunch of placeholders](http://i.imgur.com/ZHfulYb.png)

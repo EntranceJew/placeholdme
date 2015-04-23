@@ -31,6 +31,7 @@ local function newPlaceHolder(self, width, height, columns, rows, sprintstring, 
 			height	frame height
 	]]
 	local precolor = {love.graphics.getColor()}
+	local precanvas = love.graphics.getCanvas()
 	local iData = love.image.newImageData(width*columns, height*rows)
 	local canvas = love.graphics.newCanvas(width, height)
 	love.graphics.setCanvas(canvas)
@@ -53,7 +54,9 @@ local function newPlaceHolder(self, width, height, columns, rows, sprintstring, 
 	end
 	
 	-- reset the graphical state
-	love.graphics.setCanvas()
+	if precanvas then
+		love.graphics.setCanvas(precanvas)
+	end
 	love.graphics.setColor(precolor)
 	return iData
 end

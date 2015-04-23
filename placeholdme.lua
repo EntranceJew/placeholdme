@@ -54,9 +54,7 @@ local function newPlaceHolder(self, width, height, columns, rows, sprintstring, 
 	end
 	
 	-- reset the graphical state
-	if precanvas then
-		love.graphics.setCanvas(precanvas)
-	end
+	love.graphics.setCanvas(precanvas)
 	love.graphics.setColor(precolor)
 	return iData
 end

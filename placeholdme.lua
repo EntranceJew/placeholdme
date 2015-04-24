@@ -18,6 +18,18 @@ local function tableMerge(t, t2, retainkeys)
 end
 
 local function newPlaceHolder(self, width, height, columns, rows, sprintstring, sprintvars, fontcolor, fillcolor)
+	if type(width) == 'table' then
+		height = width.height
+		columns = width.columns
+		rows = width.rows
+		sprintstring = width.sprintstring
+		sprintvars = width.sprintvars
+		fontcolor = width.fontcolor
+		fillcolor = width.fillcolor
+		
+		-- do this last so we don't overwrite the table
+		width = width.width
+	end
 	columns = columns or 1
 	rows = rows or 1
 	sprintstring = sprintstring or "%(defstring)s\n%(width)sx%(height)s \n%(column)s,%(row)s"

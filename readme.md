@@ -4,7 +4,7 @@ A love lib for generating a temporary sprite sheet.
 Use it anywhere you would usually reference an asset. You don't need to wait to have visual assets to start spinning out some code.
 
 # Parameters
-* **width**  _required_ `number` The width of a single frame of the spritesheet.
+* **width**  _required_ `number/table` If a number: the width of a single frame of the spritesheet. If a table: it should contain key/value pairs for the rest of the parameters.
 * **height** _required_ `number` The height of a single frame of the spritesheet.
 * **columns** `number` The number of horizontal frames the spirtesheet should have.
 * **rows** `number` The number of vertical frames the spritesheet should have.
@@ -34,4 +34,46 @@ function love.draw()
 end
 ```
 Output:
+
 ![a bunch of placeholders](http://i.imgur.com/ZHfulYb.png)
+
+# Advanced Usage
+```lua
+-- drop it in your project
+placeholdme = require 'placeholdme'
+
+local parameters = {
+	width = 100,
+	height = 200,
+	columns = 3,
+	fillcolor = {58, 179, 54, 255}
+}
+
+-- set up what we're going to 
+local values = {
+	'Enemy\nidle',
+	'Enemy\nwalk-up',
+	'Enemy\nattack',
+}
+
+for _, pose in pairs(values) do
+	-- don't provide parameters we're not going to use
+	-- see: http://www.lua.org/pil/5.3.html
+	local idata = placeholdme{
+		width = 100,
+		height = 200,
+		columns = 3,
+		fillcolor = {58, 179, 54, 255},
+		sprintvars = pose
+	}
+	
+	-- save the images to disk to prevent generating them again
+	idata:encode(pose:gsub("\n", "_")..'.png')
+end
+```
+
+Output: [imgur link](http://imgur.com/a/hM2nC)
+
+![Enemy_attack.png](http://i.imgur.com/oeMaWc4.png)
+![Enemy_idle.png](http://i.imgur.com/plWjq93.png)
+![Enemy_walk-up.png](http://i.imgur.com/ABpWZGf.png)

@@ -31,6 +31,7 @@ local function newPlaceHolder(self, width, height, columns, rows, sprintstring, 
 			width	frame width
 			height	frame height
 	]]
+	local prefont = love.graphics.getFont()
 	local precolor = {love.graphics.getColor()}
 	local precanvas = love.graphics.getCanvas()
 	local iData = love.image.newImageData(width*columns, height*rows)
@@ -38,7 +39,6 @@ local function newPlaceHolder(self, width, height, columns, rows, sprintstring, 
 	love.graphics.setCanvas(canvas)
 	for h=1,rows do
 		for w=1,columns do
-			-- @TODO: Precalculate image/font height to center things horizontally.
 			-- fill
 			canvas:clear(fillcolor)
 			
@@ -46,7 +46,12 @@ local function newPlaceHolder(self, width, height, columns, rows, sprintstring, 
 			love.graphics.setColor(fontcolor)
 			local providedVars = {column=w, row=h, width=width, height=height}
 			local str2sprint = interp(sprintstring, tableMerge(providedVars, sprintvars, true))
-			love.graphics.printf(str2sprint, 0, 0, width, "center")
+			
+			-- vertically center it, draw
+			local _, nolines = prefont:getWrap(str2sprint, width)
+			-- the height of a line * lines, divided amongst the area available
+			local drawy = (height-prefont:getHeight()*nolines)/2
+			love.graphics.printf(str2sprint, 0, drawy, width, "center")
 			
 			-- put the canvas on the master image
 			local canvasData = canvas:getImageData()

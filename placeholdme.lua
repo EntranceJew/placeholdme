@@ -21,7 +21,7 @@ local function newPlaceHolder(self, width, height, columns, rows, sprintstring, 
 	columns = columns or 1
 	rows = rows or 1
 	sprintstring = sprintstring or "%(defstring)s\n%(width)sx%(height)s \n%(column)s,%(row)s"
-	sprintvars = {defstring = 'placeholder'}
+	sprintvars = sprintvars or {defstring = 'placeholder'}
 	fontcolor = fontcolor or {255, 255, 255, 255}
 	fillcolor = fillcolor or {128, 128, 128, 255}
 	--[[

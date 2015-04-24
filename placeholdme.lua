@@ -21,7 +21,11 @@ local function newPlaceHolder(self, width, height, columns, rows, sprintstring, 
 	columns = columns or 1
 	rows = rows or 1
 	sprintstring = sprintstring or "%(defstring)s\n%(width)sx%(height)s \n%(column)s,%(row)s"
-	sprintvars = sprintvars or {defstring = 'placeholder'}
+	if type(sprintvars) == 'string' then
+		sprintvars = {defstring = sprintvars}
+	elseif type(sprintvars) ~= 'table' then
+		sprintvars = {defstring = 'placeholder'}
+	end
 	fontcolor = fontcolor or {255, 255, 255, 255}
 	fillcolor = fillcolor or {128, 128, 128, 255}
 	--[[

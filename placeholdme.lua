@@ -20,7 +20,8 @@ end
 local function newPlaceHolder(self, width, height, columns, rows, sprintstring, sprintvars, fontcolor, fillcolor)
 	columns = columns or 1
 	rows = rows or 1
-	sprintstring = sprintstring or "placeholder\n%(width)sx%(height)s \n%(column)s,%(row)s"
+	sprintstring = sprintstring or "%(defstring)s\n%(width)sx%(height)s \n%(column)s,%(row)s"
+	sprintvars = {defstring = 'placeholder'}
 	fontcolor = fontcolor or {255, 255, 255, 255}
 	fillcolor = fillcolor or {128, 128, 128, 255}
 	--[[
@@ -44,7 +45,7 @@ local function newPlaceHolder(self, width, height, columns, rows, sprintstring, 
 			-- do the text
 			love.graphics.setColor(fontcolor)
 			local providedVars = {column=w, row=h, width=width, height=height}
-			local str2sprint = interp(sprintstring, tableMerge(providedVars, sprintvars))
+			local str2sprint = interp(sprintstring, tableMerge(providedVars, sprintvars, true))
 			love.graphics.printf(str2sprint, 0, 0, width, "center")
 			
 			-- put the canvas on the master image

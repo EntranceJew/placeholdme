@@ -56,7 +56,7 @@ local function newPlaceHolder(self, width, height, columns, rows, sprintstring, 
 	for h=1,rows do
 		for w=1,columns do
 			-- fill
-			canvas:clear(fillcolor)
+			love.graphics.clear(fillcolor)
 			
 			-- do the text
 			love.graphics.setColor(fontcolor)
@@ -64,13 +64,13 @@ local function newPlaceHolder(self, width, height, columns, rows, sprintstring, 
 			local str2sprint = interp(sprintstring, tableMerge(providedVars, sprintvars, true))
 			
 			-- vertically center it, draw
-			local _, nolines = prefont:getWrap(str2sprint, width)
+			local _, wrappedtext = prefont:getWrap(str2sprint, width)
 			-- the height of a line * lines, divided amongst the area available
-			local drawy = (height-prefont:getHeight()*nolines)/2
+			local drawy = (height-prefont:getHeight()*#wrappedtext)/2
 			love.graphics.printf(str2sprint, 0, drawy, width, "center")
 			
 			-- put the canvas on the master image
-			local canvasData = canvas:getImageData()
+			local canvasData = canvas:newImageData()
 			iData:paste(canvasData, width*(w-1), height*(h-1), 0, 0, width, height)
 		end
 	end
